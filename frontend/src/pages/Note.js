@@ -17,9 +17,7 @@ const Note = () => {
   let [note, setNote] = useState(null)
 
   useEffect(() => {
-    if(noteId !== 'add'){
-      getNote()
-    }
+    if(noteId !== 'add') getNote()
   }, [noteId])
 
 
