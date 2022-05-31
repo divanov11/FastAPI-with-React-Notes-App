@@ -15,12 +15,13 @@ app.add_middleware(
 @app.get("/")
 def getNotes():
     notes = db.sql('SELECT * FROM notesapp.notes ORDER BY __updatedtime__ DESC')
+    #notes = db.search_by_value('notesapp', 'notes', "id", "*", get_attributes=['*'])
     return notes
 
 @app.get("/{id}")
 def getNote(id:str):
-    note = db.search_by_hash('notesapp', 'notes', [id] , get_attributes=['*'] )[0]
-    return note
+    notes = db.search_by_hash('notesapp', 'notes', [id] , get_attributes=['*'] )
+    return notes[0]
 
 @app.post("/")
 def addNotes(data = Body()):
