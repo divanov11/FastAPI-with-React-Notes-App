@@ -22,7 +22,7 @@ const Note = () => {
 
 
   let getNote = async () => {
-    let response = await fetch(`http://127.0.0.1:8000/${params.id}`)
+    let response = await fetch(`/notes/${params.id}`)
     let data = await response.json()
     setNote(data)
   }
@@ -32,11 +32,11 @@ const Note = () => {
 
     console.log('Submit data triggerd...')
 
-    let url = 'http://127.0.0.1:8000/'
+    let url = '/notes'
     let method = 'POST'
 
     if (params.id !== 'add'){
-        url = `http://127.0.0.1:8000/${params.id}`
+        url = `/notes/${params.id}`
         method = 'PUT'
     }
 
@@ -63,7 +63,7 @@ const Note = () => {
 
   let deleteNote = async (e) => {
       e.preventDefault()
-      await fetch(`http://127.0.0.1:8000/${params.id}`, {method:'DELETE'})
+      await fetch(`/notes/${params.id}`, {method:'DELETE'})
       navigate('/')
 
   }

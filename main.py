@@ -13,30 +13,35 @@ app.add_middleware(
 )
 
 @app.get("/")
+def getRoutes():
+    return ['/notes', '/notes/<ID>']
+
+
+@app.get("/notes")
 def getNotes():
     notes = db.sql('SELECT * FROM notesapp.notes ORDER BY __updatedtime__ DESC')
     #notes = db.search_by_value('notesapp', 'notes', "id", "*", get_attributes=['*'])
     return notes
 
-@app.get("/{id}")
+@app.get("/notes/{id}")
 def getNote(id:str):
     notes = db.search_by_hash('notesapp', 'notes', [id] , get_attributes=['*'] )
     return notes[0]
 
-@app.post("/")
+@app.post("/notes")
 def addNotes(data = Body()):
     db.insert('notesapp', 'notes', [{"body":data['body']}])
     notes = db.sql('SELECT * FROM notesapp.notes')
     return notes
 
 
-@app.put("/{id}")
+@app.put("/notes/{id}")
 def updateNote(id:str, data = Body()):
     note = db.update('notesapp', 'notes', [{"id":id, "body":data["body"]}])
     notes = db.sql('SELECT * FROM notesapp.notes')
     return notes
 
-@app.delete("/{id}")
+@app.delete("/notes/{id}")
 def deleteNote(id:str):
     db.delete('notesapp', 'notes', [id])
     notes = db.sql('SELECT * FROM notesapp.notes')
